@@ -3,7 +3,8 @@
 
 import * as React from 'react'
 
-function Greeting({initialName}) {
+function Greeting({initialName = ''}) {
+	// set default value (to an empty string) so that the component stays "controlled" by React
 	const [greeting, setGreeting] = React.useState(initialName)
 
 	function handleChange(event) {
