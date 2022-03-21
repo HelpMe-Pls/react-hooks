@@ -1,4 +1,4 @@
-// useEffect: persistent state
+// full explanation video at: from https://epicreact.dev/modules/react-hooks/useeffect-persistent-state-extra-credit-solution-4
 // 💯 flexible localStorage hook
 // http://localhost:3000/isolated/final/02.extra-4.js
 
@@ -22,12 +22,12 @@ function useLocalStorageState(
 				window.localStorage.removeItem(key)
 			}
 		}
-		return typeof defaultValue === 'function'
+		return typeof defaultValue === 'function' // explained at 03:25
 			? defaultValue()
 			: defaultValue
 	})
 
-	const prevKeyRef = React.useRef(key)
+	const prevKeyRef = React.useRef(key) // explained at 04:10, basically it's an object that you can mutate without triggering a re-render
 
 	// Check the example at src/examples/local-state-key-change.js to visualize a key change
 	React.useEffect(() => {
@@ -37,7 +37,7 @@ function useLocalStorageState(
 		}
 		prevKeyRef.current = key
 		window.localStorage.setItem(key, serialize(state))
-	}, [key, state, serialize])
+	}, [key, state, serialize]) // explanation at 02:55
 
 	return [state, setState]
 }

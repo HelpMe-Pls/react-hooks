@@ -1,17 +1,17 @@
-// useEffect: persistent state
+// check final/02.extra-4.js for an IDEAL solution
 // http://localhost:3000/isolated/exercise/02.js
 
 import * as React from 'react'
 
 const useLocalStorageState = (key, initialValue = '') => {
 	const [name, setName] = React.useState(
-		() => window.localStorage.getItem(key) ?? initialValue,
+		() => JSON.parse(window.localStorage.getItem(key)) ?? initialValue,
 	)
 
 	// 🐨 Here's where you'll use `React.useEffect`.
 	// The callback should set the `name` in localStorage.
 	React.useEffect(() => {
-		window.localStorage.setItem(key, name)
+		window.localStorage.setItem(key, JSON.stringify(name))
 	}, [key, name])
 	return [name, setName]
 }
