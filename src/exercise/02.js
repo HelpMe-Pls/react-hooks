@@ -3,29 +3,37 @@
 
 import * as React from 'react'
 
-function Greeting({initialName = ''}) {
-	// 🐨 initialize the state to the value from localStorage
-
+const useLocalStorageState = (key, initialValue = '') => {
 	const [name, setName] = React.useState(
-		() => window.localStorage.getItem('name') ?? initialName,
+		() => window.localStorage.getItem(key) ?? initialValue,
 	)
 
 	// 🐨 Here's where you'll use `React.useEffect`.
 	// The callback should set the `name` in localStorage.
 	React.useEffect(() => {
-		window.localStorage.setItem('name', name)
-	}, [name])
+		window.localStorage.setItem(key, name)
+	}, [key, name])
+	return [name, setName]
+}
+
+function Greeting({initialName = ''}) {
+	// 🐨 initialize the state to the value from custom hook
+	const [greeting, setGreeting] = useLocalStorageState('name', initialName)
 
 	function handleChange(event) {
-		setName(event.target.value)
+		setGreeting(event.target.value)
 	}
 	return (
 		<div>
 			<form>
 				<label htmlFor="name">Name: </label>
-				<input value={name} onChange={handleChange} id="name" />
+				<input value={greeting} onChange={handleChange} id="name" />
 			</form>
-			{name ? <strong>Hello {name}</strong> : 'Please type your name'}
+			{greeting ? (
+				<strong>Hello {greeting}</strong>
+			) : (
+				'Please type your name'
+			)}
 		</div>
 	)
 }
