@@ -5,8 +5,14 @@ import * as React from 'react'
 
 function Greeting({initialName = ''}) {
 	// 🐨 initialize the state to the value from localStorage
+	console.log('re-rendered')
+	const initState = () => {
+		console.log('should log this just ONCE - on initial render')
+		return window.localStorage.getItem('name') ?? initialName
+	}
 	const [name, setName] = React.useState(
-		() => window.localStorage.getItem('name') ?? initialName,
+		// () => window.localStorage.getItem('name') ?? initialName,
+		initState,
 	)
 
 	// 🐨 Here's where you'll use `React.useEffect`.
