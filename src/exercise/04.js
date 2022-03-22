@@ -3,17 +3,22 @@
 
 import * as React from 'react'
 
+const useGameStateFromLocalStorage = (key, initialValue = []) => {
+	const [squares, setSquares] = React.useState(
+		() => JSON.parse(window.localStorage.getItem(key)) ?? initialValue,
+	)
+	React.useEffect(() => {
+		window.localStorage.setItem(key, JSON.stringify(squares))
+	}, [key, squares])
+	return [squares, setSquares]
+}
+
 function Board() {
 	// 🐨 squares is the "managed" state for this component. Add useState for squares
-	const [squares, setSquares] = React.useState(
-		() =>
-			JSON.parse(window.localStorage.getItem('game')) ??
-			Array(9).fill(null),
+	const [squares, setSquares] = useGameStateFromLocalStorage(
+		'game',
+		Array(9).fill(null),
 	)
-
-	React.useEffect(() => {
-		window.localStorage.setItem('game', JSON.stringify(squares))
-	}, [squares])
 
 	// 💰 I've written the calculations for you! So you can use my utilities
 	// below to create these variables:
