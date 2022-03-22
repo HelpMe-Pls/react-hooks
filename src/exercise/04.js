@@ -3,6 +3,7 @@
 
 import * as React from 'react'
 
+// checkout final/04.extra-2.js for the IDEAL solution
 const useGameStateFromLocalStorage = (key, initialValue = []) => {
 	const [squares, setSquares] = React.useState(
 		() => JSON.parse(window.localStorage.getItem(key)) ?? initialValue,
