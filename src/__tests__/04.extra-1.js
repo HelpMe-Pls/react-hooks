@@ -49,7 +49,7 @@ test('can play a game of tic tac toe', () => {
 
 	alfredTip(
 		() =>
-			expect(JSON.parse(window.localStorage.getItem('squares'))).toEqual(
+			expect(JSON.parse(window.localStorage.getItem('game'))).toEqual(
 				// prettier-ignore
 				[
           'X', 'O', 'X',
@@ -57,6 +57,6 @@ test('can play a game of tic tac toe', () => {
           'O', null, 'X',
         ],
 			),
-		'Make sure that the "squares" localStorage item is updated with the JSON.stringified squares',
+		'Make sure that the "game" localStorage item is updated with the JSON.stringified squares',
 	)
 })

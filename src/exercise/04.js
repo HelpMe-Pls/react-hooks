@@ -5,10 +5,18 @@ import * as React from 'react'
 
 function Board() {
 	// 🐨 squares is the "managed" state for this component. Add useState for squares
-	const [squares, setSquares] = React.useState(Array(9).fill(null))
+	const [squares, setSquares] = React.useState(
+		() =>
+			JSON.parse(window.localStorage.getItem('game')) ??
+			Array(9).fill(null),
+	)
+
+	React.useEffect(() => {
+		window.localStorage.setItem('game', JSON.stringify(squares))
+	}, [squares])
 
 	// 💰 I've written the calculations for you! So you can use my utilities
-	// below to create these variables
+	// below to create these variables:
 	// 🐨 We'll need the following bits of derived state:
 	// - nextValue ('X' or 'O')
 	const nextValue = calculateNextValue(squares)
