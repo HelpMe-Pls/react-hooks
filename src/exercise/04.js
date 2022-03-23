@@ -35,10 +35,11 @@ function Board({onSelectSquare, squares}) {
 }
 
 function Game() {
-	const [history, setHistory] = useLocalStorageState(
-		'game:history',
+	// each array in the {history} represents a version of the game with all the checked box from that point of time
+	// console.log(history) to see what happens
+	const [history, setHistory] = useLocalStorageState('game:history', [
 		Array(9).fill(null),
-	)
+	])
 	const [currentStep, setCurrentStep] = useLocalStorageState('game:step', 0)
 
 	const currentSquares = history[currentStep]
@@ -49,7 +50,13 @@ function Game() {
 	function selectSquare(square) {
 		if (winner || currentSquares[square]) return
 
+		/**
+		 * Clone a version of the {history} AT THE {currentStep} so that when we go BACK to
+		 * a specific step and then continue the game, it would start from THAT step
+		 * just try const newHistory = [...history] to see this bug
+		 */
 		const newHistory = history.slice(0, currentStep + 1)
+
 		const tempSquares = [...currentSquares]
 		tempSquares[square] = nextValue
 
@@ -62,7 +69,8 @@ function Game() {
 		setCurrentStep(0)
 	}
 
-	const moves = history.map((stepSquares, step) => {
+	const moves = history.map((item, step) => {
+		// {item} represents ALL of those checked box for that particular {step}
 		const desc = step ? `Go to move #${step}` : 'Go to game start'
 		const isCurrentStep = step === currentStep
 		return (
