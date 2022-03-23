@@ -23,6 +23,7 @@ function Tilt({children}) {
 
 		// 💰 Don't forget to return a cleanup function. VanillaTilt.init will add an
 		// object to your DOM node to cleanup:
+		// Explanation @2:55: https://epicreact.dev/modules/react-hooks/useref-and-useeffect-dom-interaction-solution
 		return () => tiltNode.vanillaTilt.destroy()
 
 		// 💰 Don't forget to specify your effect's dependencies array! In our case
