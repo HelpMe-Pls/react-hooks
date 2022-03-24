@@ -61,6 +61,7 @@ function PokemonInfo({pokemonName}) {
 }
 
 // {error} comes from the state defined in <ErrorBoundary/>
+// {resetErrorBoundary} is to reset the state without unmount & remount the component
 function ErrorFallback({error, resetErrorBoundary}) {
 	return (
 		<div role="alert">
@@ -91,9 +92,10 @@ function App() {
 					/**
 					{pokemonName} is a state from <App/> that gets updated on every re-render so if we pass it as a prop to <ErrorBoundary/>, it'll also re-rendered and reset its state (in this case: {error}). The reason why we need to reset its {error} state is in case we had an error in <PokemonInfo/>, it'll set the {error} state in <ErrorBoundary/>, and it persists through re-renders, which leads to a bug where we re-submit the available Pokemon, the error's still there
 					 */
-					key={pokemonName}
+					// key={pokemonName} // this prop is now handled by {resetErrorBoundary} prop
 					FallbackComponent={ErrorFallback}
-					onReset={handleReset}
+					onReset={handleReset} // a pair prop with {resetErrorBoundary}
+					resetKeys={[pokemonName]} // things that trigger a reset
 				>
 					<PokemonInfo pokemonName={pokemonName} />
 				</ErrorBoundary>
