@@ -30,9 +30,11 @@ function PokemonInfo({pokemonName}) {
 		// 💰 if the pokemonName is falsy (an empty string, in case of the initial render) then we'll have to exit early coz fetchPokemon("") is not a thing.
 		if (!pokemonName) return
 
+		// 🐨 before calling `fetchPokemon`, clear the current pokemon state by setting it to null:
+		setState({status: 'pending'})
+
 		// (This is to enable the loading state when switching between different pokemon.)
 		// 💰 Use the `fetchPokemon` function to fetch a pokemon by its name:
-
 		fetchPokemon(pokemonName).then(
 			pokemonData => {
 				setState({status: 'resolved', pokemon: pokemonData})
@@ -40,8 +42,8 @@ function PokemonInfo({pokemonName}) {
 			err => setState({status: 'rejected', pokemon: null, error: err}),
 		)
 
-		// 🐨 before calling `fetchPokemon`, clear the current pokemon state by setting it to null.
-		return () => setState({status: 'pending', pokemon: null})
+		// The implementation of the clean up function will prevent the render of the <PokemonInfoFallback/>:
+		// return () => setState({status: 'pending'})
 	}, [pokemonName])
 
 	// 🐨 return the following things based on the `pokemon` state and `pokemonName` prop:
@@ -55,15 +57,16 @@ function PokemonInfo({pokemonName}) {
 	//   3. pokemon: <PokemonDataView pokemon={pokemon} />
 	//  <ErrorBoundary/> also catches runtime error
 	//	e.g. try to return <PokemonDataView pokemon={null} /> to see that
-	else return <PokemonDataView pokemon={pokemon} />
+	else if (status === 'resolved') return <PokemonDataView pokemon={pokemon} />
 }
 
 // {error} comes from the state defined in <ErrorBoundary/>
-function ErrorFallback({error}) {
+function ErrorFallback({error, resetErrorBoundary}) {
 	return (
 		<div role="alert">
 			There was an error:{' '}
 			<pre style={{whiteSpace: 'normal'}}>{error.message}</pre>
+			<button onClick={resetErrorBoundary}>You dumbass bitch !</button>
 		</div>
 	)
 }
@@ -75,6 +78,10 @@ function App() {
 		setPokemonName(newPokemonName)
 	}
 
+	function handleReset() {
+		setPokemonName('')
+	}
+
 	return (
 		<div className="pokemon-info-app">
 			<PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
@@ -84,8 +91,9 @@ function App() {
 					/**
 					{pokemonName} is a state from <App/> that gets updated on every re-render so if we pass it as a prop to <ErrorBoundary/>, it'll also re-rendered and reset its state (in this case: {error}). The reason why we need to reset its {error} state is in case we had an error in <PokemonInfo/>, it'll set the {error} state in <ErrorBoundary/>, and it persists through re-renders, which leads to a bug where we re-submit the available Pokemon, the error's still there
 					 */
-					someRandomPropToResetState={pokemonName}
+					key={pokemonName}
 					FallbackComponent={ErrorFallback}
+					onReset={handleReset}
 				>
 					<PokemonInfo pokemonName={pokemonName} />
 				</ErrorBoundary>
