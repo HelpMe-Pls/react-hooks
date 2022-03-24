@@ -94,7 +94,13 @@ function App() {
 			<PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
 			<hr />
 			<div className="pokemon-info">
-				<ErrorBoundary FallbackComponent={ErrorFallback}>
+				<ErrorBoundary
+					/**
+					{pokemonName} is a state from <App/> that gets updated on every re-render so if we pass it as a prop to <ErrorBoundary/>, it'll also re-rendered and reset its state (in this case: {error}). The reason why we need to reset its {error} state is in case we had an error in <PokemonInfo/>, it'll set the {error} state in <ErrorBoundary/>, and it persists through re-renders, which leads to a bug where we re-submit the available Pokemon, the error's still there
+					 */
+					someRandomPropToResetState={pokemonName}
+					FallbackComponent={ErrorFallback}
+				>
 					<PokemonInfo pokemonName={pokemonName} />
 				</ErrorBoundary>
 			</div>
