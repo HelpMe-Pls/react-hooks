@@ -14,9 +14,9 @@ import {
 } from '../pokemon'
 
 function PokemonInfo({pokemonName}) {
-	// 🐨 Have state for the pokemon (null)
-	const [pokemon, setPokemon] = React.useState(null)
-	const [status, setStatus] = React.useState('idle')
+	// 🐨 Have a common state for API responses && the pokemon
+	const [state, setState] = React.useState({status: 'idle', pokemon: null})
+	const {status, pokemon} = state
 
 	// 🐨 use React.useEffect where the callback should be called whenever the
 	// pokemon name changes.
@@ -27,17 +27,16 @@ function PokemonInfo({pokemonName}) {
 
 		// (This is to enable the loading state when switching between different pokemon.)
 		// 💰 Use the `fetchPokemon` function to fetch a pokemon by its name:
-		setStatus('pending')
+
 		fetchPokemon(pokemonName).then(
 			pokemonData => {
-				setPokemon(pokemonData)
-				setStatus('resolved')
+				setState({status: 'resolved', pokemon: pokemonData}) // destructed
 			},
-			_err => setStatus('rejected'),
+			_err => setState({status: 'rejected', pokemon: null}), // {pokemon} is defaulted to `null`
 		)
 
 		// 🐨 before calling `fetchPokemon`, clear the current pokemon state by setting it to null.
-		return () => setPokemon(null)
+		return () => setState({status: 'pending', pokemon: null})
 	}, [pokemonName])
 
 	// 🐨 return the following things based on the `pokemon` state and `pokemonName` prop:
