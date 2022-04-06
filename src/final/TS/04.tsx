@@ -3,7 +3,7 @@
 // http://localhost:3000/isolated/final/04.extra-3.tsx
 
 import * as React from 'react'
-import {useLocalStorageState} from '../../utils'
+import {useLocalStorageState} from '../../utils-ts'
 import {
 	calculateStatus,
 	calculateNextValue,

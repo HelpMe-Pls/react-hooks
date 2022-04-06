@@ -17,3 +17,6 @@
 ## Practical `useState`
 - **Derived** state: consider using this technique and see whether certain state variables can be [computed on the fly](https://github.com/HelpMe-Pls/react-hooks/blob/extra/src/final/TS/04.tsx) rather than stored in the state to make it easier to keep your data in sync when changes occur. Having a single state variable that you need to keep track of, while all other ones derived from it, simplifies the state mutation.
 - __Dev tip__: when you're facing a challenging problem, try to set up the UI before adding interactivity and state management
+
+## DOM Side-Effects
+- It's a good practice to do direct DOM interactions/manipulations (with the `ref.current`) [inside](https://github.com/HelpMe-Pls/react-hooks/blob/extra/src/final/TS/05.tsx) the `useEffect()` callback

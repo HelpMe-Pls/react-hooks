@@ -21,6 +21,11 @@ function UsernameForm({
 		usernameIsShortEnough && usernameIsLongEnough && usernameIsLowerCase
 
 	const displayErrorMessage = touched && !formIsValid
+	const usernameInputRef = React.useRef<HTMLInputElement>(null)
+
+	React.useEffect(() => {
+		if (displayErrorMessage) usernameInputRef.current?.focus()
+	}, [displayErrorMessage])
 
 	let errorMessage = null
 	if (!usernameIsLowerCase) {
