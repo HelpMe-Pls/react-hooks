@@ -1,4 +1,3 @@
-// full explanation video at: from https://epicreact.dev/modules/react-hooks/useeffect-persistent-state-extra-credit-solution-4
 // 💯 flexible localStorage hook
 // http://localhost:3000/isolated/final/02.extra-4.js
 
@@ -22,7 +21,7 @@ function useLocalStorageState(
 				window.localStorage.removeItem(key)
 			}
 		}
-		return typeof defaultValue === 'function' // explained at 03:25
+		return typeof defaultValue === 'function'
 			? defaultValue()
 			: defaultValue
 	})
