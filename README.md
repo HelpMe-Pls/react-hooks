@@ -23,7 +23,7 @@
 
 ## HTTP request with `useEffect`
 -  `useEffect()` hook cannot return anything other than the cleanup function, so it's a good practice to extract all the async code into a utility function and then call it using the promise-based `.then()` method instead of using `async/await` syntax.
--  The difference between using `.catch()` method and adding an extra argument to `.then()` method to handle errors (see more in [Extra Credit 1](https://github.com/kentcdodds/react-hooks/blob/main/src/exercise/06.md#1--handle-errors)). 
+-  The difference between using `.catch()` method and adding an extra argument to `.then()` method to handle errors (see more in [Extra Credit 1](https://github.com/HelpMe-Pls/react-hooks/blob/master/src/exercise/06.md#1--handle-errors)). 
 -  Combining states into a state object.
 -  There **is** a logical difference between setting the state inside of a clean up function and setting the state at the top of a `useEffect()` callback in terms of resetting the state ([see more at line 45](https://github.com/HelpMe-Pls/react-hooks/blob/master/src/exercise/06.js)).
 -  Resetting a child component's state by passing to it an extra prop (ideally, it should be the `key` prop) which contain the parent component's state ([see more at line 95](https://github.com/HelpMe-Pls/react-hooks/blob/master/src/exercise/06.js)).
