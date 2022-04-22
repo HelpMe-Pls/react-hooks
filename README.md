@@ -1,5 +1,5 @@
 # What I've learnt
-###### For more details, see `src/exercise/*.md` files
+###### *For more details, see [`src/exercise/*.md`](https://github.com/HelpMe-Pls/react-hooks/tree/master/src/exercise) files*
 -----------------
 
 ## `useState`
