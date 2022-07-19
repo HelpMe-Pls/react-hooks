@@ -3,7 +3,7 @@
 -----------------
 
 ## `useState`
-- The async `useState()` triggers a re-render, and a good practice is to set a default value for the [initial state](https://github.com/HelpMe-Pls/react-hooks/blob/extra/src/final/TS/01.tsx) so that your component is  "*under control*".
+- `useState()` triggers a re-render (based on closures over state values), and a good practice is to set a default value for the [initial state](https://github.com/HelpMe-Pls/react-hooks/blob/extra/src/final/TS/01.tsx) so that your component is  "*under control*".
 
 ## `useEffect`
 - [Getting initial state](https://github.com/HelpMe-Pls/react-hooks/blob/extra/src/final/TS/02.tsx) from `localStorage` and setting `localStorage` with `useEffect()`.
